@@ -1,0 +1,33 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int start=0;
+        int end=nums.length-1;
+        int flag1=0,flag2=0;
+        if(nums.length==0)
+        return new int[]{-1,-1};
+        if(nums.length==2)
+        {
+            if(target!=nums[start]&&target!=nums[end])
+            return new int[]{-1,-1};
+
+        }
+         while(start<=end){
+            if(target==nums[start]&&flag1==0)
+            flag1=1;
+            if(target<nums[start])
+            return new int[]{-1,-1};
+            if(flag1==0)
+            start++;
+            if(target==nums[end]&&flag2==0)
+            flag2=1;
+            if(target>nums[end])
+            return new int[]{-1,-1};
+            if(flag2==0)
+            end--;
+            if(flag1==1&&flag2==1)
+            break;
+
+        }
+        return new int[]{start,end};
+    }
+}
