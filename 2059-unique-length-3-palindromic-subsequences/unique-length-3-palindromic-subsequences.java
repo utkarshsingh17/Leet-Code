@@ -1,21 +1,28 @@
 class Solution {
     public int countPalindromicSubsequence(String s) {
         Set<Character> set=new HashSet<>();
-        Set<String> res=new HashSet<>();
+        int result=0;
         for(char c:s.toCharArray()){
             set.add(c);
         }
         Iterator<Character> itr=set.iterator();
+        int[][] preCompute=new int[26][2];
         while(itr.hasNext()){
             Character ch=(Character)itr.next();
-            solver(res,s,s.indexOf(ch),s.lastIndexOf(ch));
+            preCompute[ch-'a'][0]=s.indexOf(ch);
+            preCompute[ch-'a'][1]=s.lastIndexOf(ch);
         }
-        return res.size();  
-    }
-    public static Set<String> solver(Set<String> set,String s,int start,int end){
-        for(int i=start+1;i<end;i++){
-            set.add(s.charAt(start)+""+s.charAt(i)+""+s.charAt(end));
+        itr=set.iterator();
+        while(itr.hasNext()){
+            Character ch=(Character)itr.next();
+            int left=preCompute[ch-'a'][0];
+            int right=preCompute[ch-'a'][1];
+            Set<Character> res=new HashSet<>();
+            for(int i=left+1;i<=right-1;i++){
+                res.add(s.charAt(i));
+            }
+            result+=res.size();
         }
-        return set;
+        return result;  
     }
 }
