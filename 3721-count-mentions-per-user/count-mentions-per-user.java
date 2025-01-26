@@ -17,7 +17,7 @@ class Solution {
             queue.add(event);
             
         }
-        System.out.println("queue::"+queue);
+        //System.out.println("queue::"+queue);
         while(queue.isEmpty()==false){
             List<String> event=queue.poll();
             if(event.get(0).equals("OFFLINE")){
