@@ -21,15 +21,43 @@ class Solution {
 
         List<Boolean> res=new ArrayList<>();
         Map<Integer,List<Integer>> map=new HashMap<>();
+        Queue<Integer> queue=new ArrayDeque<>();
+        List<Set<Integer>> pq=new ArrayList<>();
 
-        for(int i=0;i<n;i++) map.put(i,new ArrayList<>());
+        for(int i=0;i<n;i++){
+            map.put(i,new ArrayList<>());
+            pq.add(new HashSet<>());
+        }
 
+        int[] indegree=new int[n];
         for(int[] p:prerequisites){
         List<Integer>list=map.get(p[1]);
         list.add(p[0]);
+        indegree[p[0]]++;
+        }
+
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0)queue.add(i);
+        }
+
+        while(queue.isEmpty()==false){
+            int node=queue.poll();
+        
+            for(int nbr:map.get(node)){
+                
+                Set<Integer> set=pq.get(nbr);
+                set.add(node);
+                Iterator itr=pq.get(node).iterator();
+                while(itr.hasNext()){
+                    set.add((Integer)itr.next());
+                }
+                indegree[nbr]--;
+                if(indegree[nbr]==0)queue.add(nbr);
+            }
         }
         for(int[] query:queries){
-            res.add(bfs(n,map,query[1],query[0]));
+            if(pq.get(query[0]).contains(query[1]))res.add(true);
+            else res.add(false);
         }
         
     
