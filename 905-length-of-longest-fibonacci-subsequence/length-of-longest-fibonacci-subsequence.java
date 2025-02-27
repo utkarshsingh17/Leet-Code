@@ -5,8 +5,8 @@ class Solution {
             map.put(arr[i],i);
         }
         int len=0,res=0;
-        for(int j=1;j<arr.length;j++){
-            for(int k=j+1;k<arr.length;k++){
+        for(int k=arr.length-1;k>0;k--){
+            for(int j=k-1;j>0;j--){
                 len=solve(j,k,arr,map);
                 if(len>=3){
                     res=Math.max(res,len);
